@@ -1,6 +1,7 @@
 import { FormEvent, useEffect, useState } from 'react';
 import './styles.scss';
 import Input from '../../components/Input'
+import * as Yup from 'yup';
 
 interface IForm {
     nome: string,
@@ -10,19 +11,40 @@ interface IForm {
     senha: string,
     genero: string,
     nascimento: string,
-    cor: string
+    cor: string,
+    opcao: string
 }
 
 export default () => {
-
     const [form, setForm] = useState({} as IForm);
+    const [errors, setErrors] = useState({} as Record<string, any>);
 
-    function handleSubmit(event: FormEvent) {
+    const schema = Yup.object().shape({
+        nome: Yup.string().required('Esse campo é obrigatorio'),
+    });
+
+    async function handleSubmit(event: FormEvent) {
         event.preventDefault();
+        
+        try {
+            setErrors({});
+            await schema.validate(form, {abortEarly: false});
+            console.log(form);
+        }
+        catch(error) {
+            const list = {} as Record<string, any>;
+
+            if (error instanceof Yup.ValidationError) {
+                console.log(error.inner);
+                error.inner.forEach(error => list[error.path!] = error.message);
+                console.log(list);
+                setErrors(list);
+            }
+        }
     }
 
     useEffect(() => {
-        console.log(form)
+        console.log(form);
     }, [form])
 
 
@@ -34,6 +56,7 @@ export default () => {
                     label='Nome'
                     name='nome'
                     onChange={event => setForm({ ...form, nome: event.currentTarget.value })}
+                    error={errors?.nome}
                 />
                 <Input
                     value={form.sobrenome}
@@ -76,21 +99,17 @@ export default () => {
                     type='color'
                     onChange={event => setForm({ ...form, cor: event.currentTarget.value })}
                 />
-                {/* <label>Nome:
-                    <input type="text" placeholder='Digite seu nome:' />
-                </label>
-                <label>Sobrenome:
-                    <input type="text" placeholder='Digite seu sobrenome:' />
-                </label>
-                <label>E-mail:
-                    <input type="text" placeholder='Digite seu email:' />
-                </label>
-                <label>Celular:
-                    <input type="text" placeholder='(XX) XXXXX-XXXX' />
-                </label>
-                <label>Senha:
-                    <input type="text" placeholder='Digite sua senha:' />
-                </label> */}
+                <select 
+                    value={form.opcao}
+                    name='opcao'
+                    onChange={event => setForm({ ...form, opcao: event.currentTarget.value})}
+                    defaultValue=''
+                >
+                    <option value='' disabled>Selecione uma opção</option>
+                    <option value='a'>Opção A</option>
+                    <option value='b'>Opção B</option>
+                    <option value='c'>Opção C</option>
+                </select>
                 <div className="gender">
                     <label>Gênero:
                         <div className="gender-group">
