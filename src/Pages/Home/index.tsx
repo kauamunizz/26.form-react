@@ -20,7 +20,15 @@ export default () => {
     const [errors, setErrors] = useState({} as Record<string, any>);
 
     const schema = Yup.object().shape({
-        nome: Yup.string().required('Esse campo é obrigatorio'),
+        nome: Yup.string().required('O campo "Nome" é obrigatorio'),
+        sobrenome: Yup.string().required('O campo "Sobrenome" é obrigatorio'),
+        email: Yup.string().required('O campo "Email" é obrigatorio'),
+        celular: Yup.string().required('O campo "Celular" é obrigatorio'),
+        senha: Yup.string().min(6).max(20).required('O campo "Senha" é obrigatorio'),
+        genero: Yup.string().required('O campo "Genero" é obrigatorio'),
+        nascimento: Yup.date().min(new Date(1940, 1, 1)).max(new Date()).required('O campo "Data de nascimento" é obrigatorio'),
+        cor: Yup.string().required('O campo "Cor" é obrigatorio'),
+        opcao: Yup.string().required('O campo "Gênero" é obrigatorio'),
     });
 
     async function handleSubmit(event: FormEvent) {
@@ -63,6 +71,7 @@ export default () => {
                     label='Sobrenome'
                     name='sobrenome'
                     onChange={event => setForm({ ...form, sobrenome: event.currentTarget.value })}
+                    error={errors?.sobrenome}
                 />
                 <Input
                     value={form.email}
@@ -70,6 +79,7 @@ export default () => {
                     name='email'
                     type='email'
                     onChange={event => setForm({ ...form, email: event.currentTarget.value })}
+                    error={errors?.email}
                 />
                 <Input
                     value={form.celular}
@@ -77,6 +87,7 @@ export default () => {
                     name='celular'
                     type='tel'
                     onChange={event => setForm({ ...form, celular: event.currentTarget.value })}
+                    error={errors?.celular}
                 />
                 <Input
                     value={form.senha}
@@ -84,6 +95,7 @@ export default () => {
                     name='senha'
                     type='password'
                     onChange={event => setForm({ ...form, senha: event.currentTarget.value })}
+                    error={errors?.senha}
                 />
                 <Input
                     value={form.nascimento}
@@ -91,6 +103,7 @@ export default () => {
                     name='nascimento'
                     type='date'
                     onChange={event => setForm({ ...form, nascimento: event.currentTarget.value })}
+                    error={errors?.nascimento}
                 />
                 <Input
                     value={form.cor}
@@ -98,6 +111,7 @@ export default () => {
                     name='cor'
                     type='color'
                     onChange={event => setForm({ ...form, cor: event.currentTarget.value })}
+                    error={errors?.cor}
                 />
                 <select 
                     value={form.opcao}
