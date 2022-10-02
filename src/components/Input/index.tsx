@@ -1,4 +1,5 @@
 import React, { InputHTMLAttributes } from 'react';
+import './styles.scss'
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
     label: string;
@@ -13,7 +14,7 @@ export default ({ label, error, ...rest }: Props) => {
                 {label}
                 <input {...rest} />
             </label>
-            {error && <div> {error} </div>}
+            {error && <div className='error'> {error} </div>}
         </>
     )
 }

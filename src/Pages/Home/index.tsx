@@ -106,6 +106,7 @@ export default () => {
                     error={errors?.nascimento}
                 />
                 <Input
+                    className='color'
                     value={form.cor}
                     label='Qual sua cor favorita?'
                     name='cor'
