@@ -1,9 +1,9 @@
 import React, { InputHTMLAttributes } from 'react';
-import './styles.scss'
+import './styles.scss';
 
 interface Props extends InputHTMLAttributes<HTMLInputElement> {
     label: string;
-    error?: string
+    error?: string;
 }
 
 export default ({ label, error, ...rest }: Props) => {

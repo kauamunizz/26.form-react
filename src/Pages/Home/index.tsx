@@ -53,7 +53,7 @@ export default () => {
 
     useEffect(() => {
         console.log(form);
-    }, [form])
+    }, [form]);
 
 
     return (
