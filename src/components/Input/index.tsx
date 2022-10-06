@@ -9,12 +9,12 @@ interface Props extends InputHTMLAttributes<HTMLInputElement> {
 export default ({ label, error, ...rest }: Props) => {
 
     return (
-        <>
+        <div className="label-input">
             <label>
                 {label}
                 <input {...rest} />
             </label>
             {error && <div className='error'> {error} </div>}
-        </>
+        </div>
     )
 }
